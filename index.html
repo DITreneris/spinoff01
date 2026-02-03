@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DI Promptų Biblioteka – Verslo Mokymų Platforma</title>
+    <title>8 paprasti žingsniai, kad DI pradėtų dirbti už tave</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -59,6 +59,7 @@
             display: inline-block;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Safari palaikymas */
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 15px;
@@ -222,6 +223,17 @@
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
+            outline: none;
+        }
+
+        .code-block:focus {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .code-block:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
         }
 
         .code-block::before {
@@ -317,6 +329,17 @@
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
             box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+            outline: none;
+        }
+
+        .btn:focus {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
         }
 
         .btn:hover {
@@ -420,6 +443,19 @@
             color: var(--text-light);
         }
 
+        .copyright {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid var(--border);
+        }
+
+        .copyright p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin: 0;
+            font-weight: 500;
+        }
+
         /* ===== UTILITIES ===== */
         .hidden {
             position: absolute;
@@ -428,6 +464,16 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 50px 24px;
+            }
+
+            .header h1 {
+                font-size: 44px;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 font-size: 16px;
@@ -475,6 +521,29 @@
             }
         }
 
+        @media (max-width: 480px) {
+            .header {
+                padding: 32px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .prompt-title {
+                font-size: 22px;
+            }
+
+            .code-block {
+                padding: 20px;
+            }
+
+            .btn {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+
         /* ===== PRINT ===== */
         @media print {
             body {
@@ -505,21 +574,21 @@
     <div class="container">
         
         <!-- HEADER -->
-        <header class="header">
-            <div class="badge">📚 VERSLO MOKYMŲ PLATFORMA</div>
-            <h1>DI Promptų Biblioteka</h1>
-            <p>8 promptai organizacijos analizei ir optimizavimui su dirbtinio intelekto pagalba</p>
+        <header class="header" role="banner">
+            <div class="badge" aria-label="Projekto kategorija" role="text">DI Biblioteka</div>
+            <h1>8 paprasti žingsniai, kad DI pradėtų dirbti už tave</h1>
+            <p>Procesai ir automatizacija - per kelias minutes</p>
         </header>
 
         <!-- INSTRUCTIONS -->
-        <section class="instructions">
-            <h2 class="instructions-title">
-                <span>📖</span>
+        <section class="instructions" aria-labelledby="instructions-title">
+            <h2 class="instructions-title" id="instructions-title">
+                <span aria-hidden="true" role="img">📖</span>
                 <span>Kaip naudoti šią biblioteką</span>
             </h2>
             <ol>
                 <li>Pasirinkite promptą ir spauskite ant jo – tekstas automatiškai pažymėsis</li>
-                <li>Spauskite mygtuką <strong>"Kopijuoti promptą"</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
+                <li>Spauskite mygtuką <strong>"Kopijuoti promptą"</strong> arba naudokite klaviatūros kombinaciją <code>Ctrl+C</code> / <code>Cmd+C</code></li>
                 <li><strong>Įklijuokite</strong> į ChatGPT, Claude ar kitą DI įrankį</li>
                 <li>Pakeiskite <code>[ĮMONĖ]</code> ir <code>[MANO ROLĖ]</code> savo duomenimis ir gaukite rezultatus!</li>
             </ol>
@@ -536,7 +605,13 @@
                 <p class="prompt-desc">Patikrinkite, ką ChatGPT žino apie jūsų organizaciją ir kur gali suklaidinti</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block1" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block1" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 1"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt1">Rolė – kritiškas verslo analitikas.
 
 Remdamasis tik viešai prieinama informacija ir bendromis rinkos žiniomis,
@@ -550,8 +625,8 @@ Struktūra:
 Pabaigoje aiškiai pažymėk:
 „Šios vietos reikalauja patikslinimo iš vartotojo".</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Kodėl tai svarbu?</strong>
                         <p>Sumažina DI "haliucinacijas" ir klaidingus sprendimus, suteikdamas aiškų vaizdą, ką DI tikrai žino apie jūsų kontekstą.</p>
@@ -559,8 +634,11 @@ Pabaigoje aiškiai pažymėk:
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt1')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt1')"
+                        aria-label="Kopijuoti promptą 1 į mainų atmintinę"
+                        data-prompt-id="prompt1">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -577,7 +655,13 @@ Pabaigoje aiškiai pažymėk:
                 <p class="prompt-desc">Sukurkite išsamų jūsų organizacijos profilį ir kontekstą</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block2" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block2" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 2"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt2">Rolė – patyręs verslo analitikas.
 
 Išanalizuok įmonę [ĮMONĖ].
@@ -591,8 +675,8 @@ Aprašyk:
 Atsakymas – trumpas, struktūruotas.
 Pažymėk, kur daromos prielaidos.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Taikymas:</strong>
                         <p>Šis promptas sukuria organizacijos kontekstą, kuris bus naudojamas visuose kituose promptuose.</p>
@@ -600,8 +684,11 @@ Pažymėk, kur daromos prielaidos.</pre>
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt2')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt2')"
+                        aria-label="Kopijuoti promptą 2 į mainų atmintinę"
+                        data-prompt-id="prompt2">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -618,7 +705,13 @@ Pažymėk, kur daromos prielaidos.</pre>
                 <p class="prompt-desc">Aiškiai apibrėžkite savo rolės tikslą, atsakomybes ir įtaką</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block3" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block3" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 3"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt3">Rolė – organizacijų dizaino konsultantas.
 
 Remdamasis organizacijos analize,
@@ -632,8 +725,8 @@ aprašyk rolę [MANO ROLĖ] įmonėje [ĮMONĖ].
 
 Rašyk glaustai, be teorijos.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Rezultatas:</strong>
                         <p>Gausite aiškų rolės aprašymą, kurį galėsite naudoti kaip atskaitos tašką visiems tolimesniems žingsniams.</p>
@@ -641,8 +734,11 @@ Rašyk glaustai, be teorijos.</pre>
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt3')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt3')"
+                        aria-label="Kopijuoti promptą 3 į mainų atmintinę"
+                        data-prompt-id="prompt3">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -659,7 +755,13 @@ Rašyk glaustai, be teorijos.</pre>
                 <p class="prompt-desc">Praktiškas pareigybės aprašas su aiškiais sėkmės rodikliais</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block4" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block4" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 4"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt4">Rolė – patyręs vadovas.
 
 Sukurk pareigybės instrukciją rolei [MANO ROLĖ] įmonėje [ĮMONĖ].
@@ -672,8 +774,8 @@ Sukurk pareigybės instrukciją rolei [MANO ROLĖ] įmonėje [ĮMONĖ].
 
 Orientacija – realus darbas, ne HR formalizmas.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Praktinė vertė:</strong>
                         <p>Šis dokumentas gali būti naudojamas tiek asmeniniam vertinimui, tiek naujo darbuotojo įvedimui.</p>
@@ -681,8 +783,11 @@ Orientacija – realus darbas, ne HR formalizmas.</pre>
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt4')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt4')"
+                        aria-label="Kopijuoti promptą 4 į mainų atmintinę"
+                        data-prompt-id="prompt4">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -699,7 +804,13 @@ Orientacija – realus darbas, ne HR formalizmas.</pre>
                 <p class="prompt-desc">Identifikuokite, kur dingsta laikas ir energija (Pareto 80/20 principas)</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block5" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block5" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 5"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt5">Aprašyk 5 svarbiausius procesus,
 kuriuos realiai vykdo rolė [MANO ROLĖ] įmonėje [ĮMONĖ].
 
@@ -711,8 +822,8 @@ Kiekvienam procesui:
 
 80 % – veiksmai, 20 % – paaiškinimai.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Optimizacija:</strong>
                         <p>Supratus procesus, galėsite identifikuoti, kuriuose iš jų DI gali padaryti didžiausią įtaką.</p>
@@ -720,8 +831,11 @@ Kiekvienam procesui:
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt5')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt5')"
+                        aria-label="Kopijuoti promptą 5 į mainų atmintinę"
+                        data-prompt-id="prompt5">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -738,7 +852,13 @@ Kiekvienam procesui:
                 <p class="prompt-desc">Pavertkite dirbtinį intelektą realiu darbo asistentu</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block6" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block6" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 6"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt6">Rolė – DI diegimo konsultantas.
 
 Įvertink aprašytus procesus ir pateik 8–10 būdų,
@@ -752,8 +872,8 @@ Kiekvienam:
 
 Rašyk non-tech vartotojui.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Tikras poveikis:</strong>
                         <p>Šis promptas padės identifikuoti konkrečias vietas, kur DI gali sutaupyti valandų per savaitę.</p>
@@ -761,8 +881,11 @@ Rašyk non-tech vartotojui.</pre>
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt6')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt6')"
+                        aria-label="Kopijuoti promptą 6 į mainų atmintinę"
+                        data-prompt-id="prompt6">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -779,7 +902,13 @@ Rašyk non-tech vartotojui.</pre>
                 <p class="prompt-desc">Paruošti promptai kasdieniniams darbams ir iššūkiams</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block7" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block7" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 7"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt7">Rolė – promptų inžinierius.
 
 Sukurk 10–12 trumpų, kasdien naudojamų promptų rolei [MANO ROLĖ] įmonėje [ĮMONĖ].
@@ -793,8 +922,8 @@ Promptai turi padėti:
 Pateik lentelę:
 [PROMPTAS] | [KADA NAUDOJU] | [KOKIĄ PROBLEMĄ SPRENDŽIA].</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Kasdienybės patobulinimas:</strong>
                         <p>Gausite asmeninę promptų kolekciją, kurią galėsite naudoti kasdien be papildomo galvojimo.</p>
@@ -802,8 +931,11 @@ Pateik lentelę:
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt7')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt7')"
+                        aria-label="Kopijuoti promptą 7 į mainų atmintinę"
+                        data-prompt-id="prompt7">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
@@ -820,7 +952,13 @@ Pateik lentelę:
                 <p class="prompt-desc">Pasiruoškite spaudimui ir neapibrėžtumui iš anksto</p>
             </div>
             <div class="prompt-body">
-                <div class="code-block" id="block8" onclick="selectText(this)">
+                <div class="code-block" 
+                     id="block8" 
+                     role="button"
+                     tabindex="0"
+                     aria-label="Pasirinkti ir kopijuoti promptą 8"
+                     onclick="selectText(this)"
+                     onkeydown="handleCodeBlockKeydown(event, this)">
                     <pre class="code-text" id="prompt8">Įsivaizduok kritinę situaciją įmonėje [ĮMONĖ],
 kuriai tiesiogiai įtaką daro rolė [MANO ROLĖ].
 
@@ -830,8 +968,8 @@ Pateik:
 - kaip DI gali padėti;
 - pagrindines rizikas ir sėkmės kriterijus.</pre>
                 </div>
-                <div class="info-box">
-                    <div class="info-icon">💡</div>
+                <div class="info-box" role="note" aria-label="Informacija apie promptą">
+                    <div class="info-icon" aria-hidden="true">💡</div>
                     <div class="info-content">
                         <strong>Pasirengimas:</strong>
                         <p>Simuliacijos padeda išmokti valdyti krizes, kol jų dar nėra. Geriau praktikuoti DI, nei realioje situacijoje.</p>
@@ -839,22 +977,28 @@ Pateik:
                 </div>
             </div>
             <div class="prompt-footer">
-                <button class="btn" onclick="copyPrompt(this, 'prompt8')">
-                    <span>📋</span>
+                <button class="btn" 
+                        onclick="copyPrompt(this, 'prompt8')"
+                        aria-label="Kopijuoti promptą 8 į mainų atmintinę"
+                        data-prompt-id="prompt8">
+                    <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
             </div>
         </article>
 
         <!-- FOOTER -->
-        <footer class="footer">
-            <h3>Sėkmingos analizės! 🚀</h3>
+        <footer class="footer" role="contentinfo">
+            <h3>Sėkmingos analizės! <span aria-hidden="true">🚀</span></h3>
             <p>Nepamirškite pakeisti <strong>[ĮMONĖ]</strong> ir <strong>[MANO ROLĖ]</strong> kiekviename prompte savo duomenimis</p>
-            <div class="tags">
-                <span class="tag">🤖 DI optimizuota</span>
-                <span class="tag">📚 8 promptai</span>
-                <span class="tag">⚡ Greitas startas</span>
-                <span class="tag">🎯 Rezultatai</span>
+            <div class="tags" role="list">
+                <span class="tag" role="listitem"><span aria-hidden="true">🤖</span> DI optimizuota</span>
+                <span class="tag" role="listitem"><span aria-hidden="true">📚</span> 8 promptai</span>
+                <span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Greitas startas</span>
+                <span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Rezultatai</span>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos.</p>
             </div>
         </footer>
 
@@ -862,93 +1006,286 @@ Pateik:
 
     <textarea class="hidden" id="hiddenTextarea"></textarea>
     
-    <div class="toast" id="toast">
-        <div class="toast-icon">✓</div>
+    <div class="toast" 
+         id="toast" 
+         role="status" 
+         aria-live="polite" 
+         aria-atomic="true"
+         aria-label="Kopijavimo pranešimas">
+        <div class="toast-icon" aria-hidden="true">✓</div>
         <span>Promptas nukopijuotas į mainų atmintinę!</span>
     </div>
 
     <script>
-        function selectText(element) {
-            const pre = element.querySelector('pre');
-            const range = document.createRange();
-            range.selectNodeContents(pre);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            element.classList.add('selected');
-            
-            setTimeout(() => {
-                element.classList.remove('selected');
-            }, 2000);
-        }
+        (function() {
+            'use strict';
 
-        function copyPrompt(button, promptId) {
-            const promptText = document.getElementById(promptId).textContent;
-            
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(promptText)
-                    .then(() => showSuccess(button))
-                    .catch(() => fallbackCopy(promptText, button));
-            } else {
-                fallbackCopy(promptText, button);
+            // ===== KONFIGŪRACIJA =====
+            const CONFIG = {
+                SELECTION_TIMEOUT: 2000,
+                TOAST_DURATION: 3000,
+                BUTTON_RESET_TIMEOUT: 2500,
+                ERROR_TIMEOUT: 3000,
+                DEBOUNCE_DELAY: 100
+            };
+
+            // ===== PAGALBINĖS FUNKCIJOS =====
+            let copyTimeout = null;
+            let isCopying = false;
+
+            /**
+             * Debounce funkcija - apsaugo nuo per dažnų iškvietimų
+             */
+            function debounce(func, delay) {
+                return function(...args) {
+                    clearTimeout(copyTimeout);
+                    copyTimeout = setTimeout(() => func.apply(this, args), delay);
+                };
             }
-        }
 
-        function fallbackCopy(text, button) {
-            const textarea = document.getElementById('hiddenTextarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '0';
-            textarea.style.top = '0';
-            textarea.style.opacity = '0';
-            
-            textarea.select();
-            textarea.setSelectionRange(0, 99999);
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showSuccess(button);
-                } else {
-                    showError(button);
+            /**
+             * Pasirinkti tekstą code-block elemente
+             */
+            function selectText(element) {
+                if (!element) {
+                    console.error('Elementas nerastas');
+                    return;
                 }
-            } catch (err) {
-                showError(button);
+
+                try {
+                    const pre = element.querySelector('pre');
+                    if (!pre) {
+                        console.error('Pre elementas nerastas');
+                        return;
+                    }
+
+                    const range = document.createRange();
+                    range.selectNodeContents(pre);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    
+                    element.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        element.classList.remove('selected');
+                    }, CONFIG.SELECTION_TIMEOUT);
+                } catch (error) {
+                    console.error('Klaida pasirenkant tekstą:', error);
+                }
             }
-            
-            textarea.style.position = 'absolute';
-            textarea.style.left = '-9999px';
-        }
 
-        function showSuccess(button) {
-            const original = button.innerHTML;
-            button.innerHTML = '<span>✓</span><span>Nukopijuota!</span>';
-            button.classList.add('success');
-            showToast();
-            
-            setTimeout(() => {
-                button.innerHTML = original;
-                button.classList.remove('success');
-            }, 2500);
-        }
+            /**
+             * Klaviatūros navigacija code-block elementams
+             */
+            function handleCodeBlockKeydown(event, element) {
+                // Enter arba Space aktyvuoja pasirinkimą
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    selectText(element);
+                    
+                    // Automatiškai kopijuoti po pasirinkimo
+                    const promptId = element.querySelector('pre')?.id;
+                    if (promptId) {
+                        const button = element.closest('.prompt')?.querySelector('.btn');
+                        if (button) {
+                            setTimeout(() => {
+                                copyPrompt(button, promptId);
+                            }, 300);
+                        }
+                    }
+                }
+            }
 
-        function showError(button) {
-            const original = button.innerHTML;
-            button.innerHTML = '<span>⚠</span><span>Pažymėkite tekstą</span>';
-            
-            setTimeout(() => {
-                button.innerHTML = original;
-            }, 3000);
-        }
+            /**
+             * Kopijuoti promptą į mainų atmintinę
+             */
+            function copyPrompt(button, promptId) {
+                if (isCopying) {
+                    return; // Apsauga nuo daugkartinio kopijavimo
+                }
 
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+                if (!button || !promptId) {
+                    console.error('Trūksta parametrų: button arba promptId');
+                    showError(button, 'Klaida: trūksta parametrų');
+                    return;
+                }
+
+                const promptElement = document.getElementById(promptId);
+                if (!promptElement) {
+                    console.error(`Promptas nerastas: ${promptId}`);
+                    showError(button, 'Promptas nerastas');
+                    return;
+                }
+
+                const promptText = promptElement.textContent?.trim();
+                if (!promptText) {
+                    console.error('Promptas tuščias');
+                    showError(button, 'Promptas tuščias');
+                    return;
+                }
+
+                isCopying = true;
+
+                // Bandyti naudoti modernų Clipboard API
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(promptText)
+                        .then(() => {
+                            showSuccess(button);
+                            isCopying = false;
+                        })
+                        .catch((error) => {
+                            console.warn('Clipboard API nepavyko, naudoju fallback:', error);
+                            fallbackCopy(promptText, button);
+                        });
+                } else {
+                    // Fallback senesnėms naršyklėms
+                    fallbackCopy(promptText, button);
+                }
+            }
+
+            /**
+             * Fallback kopijavimo metodas (senesnėms naršyklėms)
+             */
+            function fallbackCopy(text, button) {
+                const textarea = document.getElementById('hiddenTextarea');
+                if (!textarea) {
+                    console.error('Hidden textarea nerastas');
+                    showError(button, 'Kopijavimas nepavyko');
+                    isCopying = false;
+                    return;
+                }
+
+                try {
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.left = '0';
+                    textarea.style.top = '0';
+                    textarea.style.opacity = '0';
+                    textarea.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+                    textarea.setSelectionRange(0, text.length);
+                    
+                    const successful = document.execCommand('copy');
+                    
+                    // Išvalyti
+                    document.body.removeChild(textarea);
+                    textarea.style.position = 'absolute';
+                    textarea.style.left = '-9999px';
+                    textarea.style.pointerEvents = 'auto';
+                    
+                    if (successful) {
+                        showSuccess(button);
+                    } else {
+                        throw new Error('execCommand copy nepavyko');
+                    }
+                } catch (error) {
+                    console.error('Fallback kopijavimas nepavyko:', error);
+                    showError(button, 'Kopijavimas nepavyko. Bandykite pažymėti tekstą rankiniu būdu.');
+                } finally {
+                    isCopying = false;
+                }
+            }
+
+            /**
+             * Rodyti sėkmės pranešimą
+             */
+            function showSuccess(button) {
+                if (!button) return;
+
+                const original = button.innerHTML;
+                button.innerHTML = '<span aria-hidden="true">✓</span><span>Nukopijuota!</span>';
+                button.classList.add('success');
+                button.setAttribute('aria-label', 'Promptas sėkmingai nukopijuotas');
+                showToast();
+                
+                setTimeout(() => {
+                    button.innerHTML = original;
+                    button.classList.remove('success');
+                    const promptId = button.getAttribute('data-prompt-id');
+                    if (promptId) {
+                        button.setAttribute('aria-label', `Kopijuoti promptą ${promptId.replace('prompt', '')} į mainų atmintinę`);
+                    }
+                }, CONFIG.BUTTON_RESET_TIMEOUT);
+            }
+
+            /**
+             * Rodyti klaidos pranešimą
+             */
+            function showError(button, message) {
+                if (!button) return;
+
+                const original = button.innerHTML;
+                const errorMessage = message || 'Pažymėkite tekstą';
+                button.innerHTML = `<span aria-hidden="true">⚠</span><span>${errorMessage}</span>`;
+                button.setAttribute('aria-label', `Klaida: ${errorMessage}`);
+                
+                setTimeout(() => {
+                    button.innerHTML = original;
+                    const promptId = button.getAttribute('data-prompt-id');
+                    if (promptId) {
+                        button.setAttribute('aria-label', `Kopijuoti promptą ${promptId.replace('prompt', '')} į mainų atmintinę`);
+                    }
+                }, CONFIG.ERROR_TIMEOUT);
+            }
+
+            /**
+             * Rodyti toast pranešimą
+             */
+            function showToast() {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+
+                toast.classList.add('show');
+                toast.setAttribute('aria-live', 'polite');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, CONFIG.TOAST_DURATION);
+            }
+
+            // ===== GLOBAL FUNKCIJOS (prieinamos HTML) =====
+            window.selectText = debounce(selectText, CONFIG.DEBOUNCE_DELAY);
+            window.copyPrompt = debounce(copyPrompt, CONFIG.DEBOUNCE_DELAY);
+            window.handleCodeBlockKeydown = handleCodeBlockKeydown;
+
+            // ===== KLAVIATŪROS SHORTCUTS =====
+            document.addEventListener('keydown', function(event) {
+                // Ctrl/Cmd + C kopijuoja pasirinktą tekstą
+                if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+                    const selection = window.getSelection();
+                    if (selection.toString().trim().length > 0) {
+                        // Tekstas jau pasirinktas, leisti naršyklei kopijuoti
+                        return;
+                    }
+                }
+
+                // Escape uždaro toast
+                if (event.key === 'Escape') {
+                    const toast = document.getElementById('toast');
+                    if (toast) {
+                        toast.classList.remove('show');
+                    }
+                }
+            });
+
+            // ===== INICIALIZACIJA =====
+            document.addEventListener('DOMContentLoaded', function() {
+                // Pridėti klaviatūros navigaciją visiems code-block elementams
+                const codeBlocks = document.querySelectorAll('.code-block');
+                codeBlocks.forEach(block => {
+                    // ARIA atributai jau pridėti HTML, tik patvirtiname
+                    if (!block.hasAttribute('tabindex')) {
+                        block.setAttribute('tabindex', '0');
+                    }
+                });
+
+                console.log('DI Promptų Biblioteka inicializuota sėkmingai');
+            });
+        })();
     </script>
 </body>
 </html>
