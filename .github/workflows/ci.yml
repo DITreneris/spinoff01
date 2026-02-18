@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -27,8 +26,8 @@ jobs:
       - name: Accessibility check (pa11y)
         run: |
           npx serve -s . -l 3000 &
-          sleep 5
-          npx pa11y http://localhost:3000/ --standard WCAG2AA --ignore "warning"
-          npx pa11y http://localhost:3000/privatumas.html --standard WCAG2AA --ignore "warning"
+          for i in $(seq 1 30); do curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ | grep -q 200 && break; sleep 1; done
+          npx pa11y http://127.0.0.1:3000/ --standard WCAG2AA --ignore "warning"
+          npx pa11y http://127.0.0.1:3000/privatumas.html --standard WCAG2AA --ignore "warning"
         env:
           CI: true

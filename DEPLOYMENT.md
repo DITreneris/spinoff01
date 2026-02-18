@@ -56,7 +56,8 @@ npx pa11y http://localhost:3000/privatumas.html --standard WCAG2AA --ignore "war
 |----------|------------|
 | Pages rodo 404 | Patikrinti, ar Settings → Pages šaltinis = **GitHub Actions**. |
 | Workflow nepaleidžiamas | Patikrinti, ar failas `.github/workflows/deploy.yml` yra `main` šakoje. |
-| Deploy nepavyksta | Actions → paskutinis „Deploy to GitHub Pages“ run → žiūrėti „deploy“ job logus. |
+| **Deploy workflow failed** | Actions → atidaryti nepavykusį run → žiūrėti **test** job: jei nepraėjo `npm test`, lokaliai paleisti `npm test` ir taisyti; jei nepraėjo **deploy** job – tikrinti environment/permissions. |
+| **CI workflow failed** | Dažniausiai `pa11y` (a11y klaidos) arba `npm test`. Lokaliai: `npm test`, tada `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/ --standard WCAG2AA`. |
 | Svetainė tuščia / neteisingas kelias | Projektas – statinis iš root; `path: .` – teisingas. Jei naudojate subfolderį, pakeisti `path`. |
 
 ---
